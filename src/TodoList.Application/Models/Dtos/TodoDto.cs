@@ -6,5 +6,6 @@ public record TodoDto(
     bool IsCompleted,
     DateTime CreatedAt,
     DateTime? CompletedAt,
-    DateTime DueDate
+    DateTime DueDate,
+    bool IsExpired
 );

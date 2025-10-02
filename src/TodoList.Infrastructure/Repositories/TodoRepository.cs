@@ -19,7 +19,7 @@ public class TodoRepository : ITodoRepository
     }
 
     public async Task<IEnumerable<TodoItem>> GetAllAsync() =>
-        await _context.Todos.AsNoTracking().ToListAsync();
+        await _context.Todos.ToListAsync();
 
     public async Task<TodoItem?> GetByIdAsync(int id) =>
         await _context.Todos.FindAsync(id);

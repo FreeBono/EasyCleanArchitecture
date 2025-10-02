@@ -32,4 +32,5 @@ public class TodoItem
 
     public void UpdateTitle(string title) => Title = title;
     public void UpdateDueDate(DueDate dueDate) => DueDate = dueDate;
+    public bool IsExpired => DueDate.Value.Date < DateTime.UtcNow.Date;
 }

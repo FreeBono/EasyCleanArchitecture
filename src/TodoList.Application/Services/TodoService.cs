@@ -61,5 +61,5 @@ public class TodoService : ITodoService
     public async Task DeleteAsync(int id) => await _repository.DeleteAsync(id);
 
     private static TodoDto ToDto(TodoItem todo) =>
-        new(todo.Id, todo.Title, todo.IsCompleted, todo.CreatedAt, todo.CompletedAt, todo.DueDate.Value);
+        new(todo.Id, todo.Title, todo.IsCompleted, todo.CreatedAt, todo.CompletedAt, todo.DueDate.Value, todo.IsExpired);
 }
