@@ -1,3 +1,4 @@
+using TodoList.Application.Common.Logging;
 using TodoList.Application.Dtos;
 using TodoList.Application.Interfaces;
 using TodoList.Application.Requests;
@@ -9,10 +10,12 @@ namespace TodoList.Application.Services;
 public class TodoService : ITodoService
 {
     private readonly ITodoRepository _repository;
+    private readonly IAppLogger<TodoService> _logger;
 
-    public TodoService(ITodoRepository repository)
+    public TodoService(ITodoRepository repository, IAppLogger<TodoService> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     public async Task<TodoDto> CreateAsync(CreateTodoRequest request)
@@ -24,6 +27,7 @@ public class TodoService : ITodoService
 
     public async Task<IEnumerable<TodoDto>> GetAllAsync()
     {
+        _logger.LogInformation("Fetching all todo items.");
         var todos = await _repository.GetAllAsync();
         return todos.Select(ToDto);
     }

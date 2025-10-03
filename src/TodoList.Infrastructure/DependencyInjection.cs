@@ -4,17 +4,20 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TodoList.Infrastructure.Persistence;
 using TodoList.Infrastructure.Repositories;
+using TodoList.Application.Common.Logging;
+using TodoList.Infrastructure.Common.Logging;
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {
   public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
   {
-      // 1. DbContext 등록 (SQLite 예시)
-      builder.Services.AddDbContext<AppDbContext>(options =>
-          options.UseSqlite("Data Source=todo.db"));
-      // 2. Repository 등록
-      builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+    // 1. DbContext 등록 (SQLite 예시)
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlite("Data Source=todo.db"));
+    // 2. Repository 등록
+    builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+    builder.Services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
   }
 }
 
