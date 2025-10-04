@@ -4,6 +4,7 @@ using TodoList.Application.Interfaces;
 using TodoList.Application.Requests;
 using TodoList.Domain.Entities;
 using TodoList.Domain.ValueObjects;
+using TodoList.Application.Common.Exceptions;
 
 namespace TodoList.Application.Services;
 
@@ -35,7 +36,10 @@ public class TodoService : ITodoService
     public async Task<TodoDto?> GetByIdAsync(int id)
     {
         var todo = await _repository.GetByIdAsync(id);
-        return todo is null ? null : ToDto(todo);
+        if (todo == null)
+            throw new NotFoundException("Todo", id);
+        
+        return ToDto(todo);
     }
 
     public async Task<TodoDto?> UpdateAsync(UpdateTodoRequest request)
